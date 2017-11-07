@@ -1,0 +1,150 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>testslideshow</title>
+        <style type="text/css">
+            * {line-height:140%;padding:0px;margin:0px;}
+            html,body {
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+                font-size:19px;
+                letter-spacing:0.05em;
+                width:100%;
+                height:100%;
+                margin:0;
+                padding:0;
+                overflow:hidden;
+            }
+            .container {
+                position:relative;
+                height:100%;
+                width:100%;
+                overflow:hidden;
+            }
+            
+            .intro {height:100vh;background:#000;color:#fff;}
+            .content {height:60vh;background:#fff;color:#000;padding:20vh 20vw;}
+            
+            h1 {font-size:10vh;padding-top:42vh;text-align:center;}
+            
+            h2 {font-size:5vh;}
+            .intro h2 {text-align:center;padding-top:45vh;}
+            .content h2 {text-align:left;padding:0px;}
+            
+            p, ul, ol, li {font-size:4vh;}
+            ul li {list-style-type:none;}
+            ul li:before {content:"-";padding-right:1vw;}
+            ol {padding-left:2vw;}
+            i {letter-spacing:-0.02em;}
+            blockquote {font-size:5vh;font-weight:bold;font-style:italic;letter-spacing:-0.02em;}
+            code {background:blue;color:#fff;padding:2vh;display:block;font-family: 'Roboto Mono', monospace;font-size:4vh;}
+            
+            h2+p, h2+ul, h2+ol, h2+code, h2+blockquote, blockquote+p, p+p {margin-top:3vh;}
+        </style>
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    </head>
+    <body>
+        <div class="container"> 
+            <div class="intro slide">
+                <h1>A killer deck</h1>
+            </div>
+            <div class="content slide">
+                <h2>Agenda</h2>
+                <ol>
+                    <li>Agenda sporting a list (this is it)</li>
+                    <li>Show some boring content</li>
+                    <li>View some cool code</li>
+                    <li>Appear smart with a quote</li>
+                    <li>Comment a bit on that quote</li>
+                    <li>The end</li>
+                </ol>
+            </div>
+            <div class="intro slide">
+                <h2>Lets get this ball rolling</h2>
+            </div>
+            <div class="content slide">
+                <h2>Here is some boring old content</h2>
+                <p>We have all this amazing technology and yet computers have turned into basically four figure wank machines. The internet was supposed to set us free, democratize us, but all it's really given us is Howard Dean's aborted candidacy and 24 hour a day access to kiddie porn.</p>
+            </div>
+            <div class="content slide">
+                <h2>Some bitchin&#39; code</h2>
+                <code>function code($average = awesome) {<br>&nbsp;&nbsp;&nbsp;&nbsp;I am an $avarage script<br>};</code>
+            </div>
+            <div class="content slide">
+                <blockquote>"Would I rather be feared or loved? Easy, both. I want people to be afraid of how much they love me."</blockquote>
+                <p>&mdash; Michael Scott</p>
+            </div>
+            <div class="content slide">
+                <p><b>"<i>Would I rather be feared or loved? Easy, both. I want people to be afraid of how much they love me.</i>"</b></p>
+                <p>As a leader, you have to find the right balance between being liked and being respected. Sure, that's not exactly the sentiment Michael was trying to convey when he was explaining his leadership style, but he does have a point. Being a scary boss isn't the best route to take, but being a lovable boss with no backbone isn't any better. A little bit of both, however, can make a great leader.</p>
+            </div>
+            <div class="intro slide">
+                <h2>Thank you, come again.</h2>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                //Add value to "remove" scroll bar
+                //$("body").css("width","+=30px");
+                
+                var totalheight = window.innerHeight;
+                var currentposition = $(window).scrollTop();
+                var slides = $('.slide').length;
+                
+                $(window).resize(function(){
+                    totalheight = window.innerHeight;
+                    currentposition = $(window).scrollTop();
+                    slides = $('.slide').length;
+                });
+                
+                //Register keypress
+                $(function () {
+                    $(document).keydown(function (evt) {
+                        if (evt.keyCode == 40) { // down arrow
+                            $('.container').animate({scrollTop: currentposition + totalheight},0);
+                            if (currentposition < totalheight * slides - totalheight) {currentposition += totalheight;}   
+                        } else if (evt.keyCode == 38) { // up arrow
+                            $('.container').animate({scrollTop: currentposition - totalheight},0);
+                            if (currentposition > 0) {currentposition -= totalheight;}
+                        } else if (evt.keyCode == 27) { //Escape
+                            fullscreen();
+                        }
+                    });
+                });
+                
+                //Toggle full screen
+                function fullscreen() {
+                    var isInFullScreen = (document.fullscreenElement && document.fullscreenElement !== null) ||
+                        (document.webkitFullscreenElement && document.webkitFullscreenElement !== null) ||
+                        (document.mozFullScreenElement && document.mozFullScreenElement !== null) ||
+                        (document.msFullscreenElement && document.msFullscreenElement !== null);
+
+                    var docElm = document.documentElement;
+                    if (!isInFullScreen) {
+                        if (docElm.requestFullscreen) {
+                            docElm.requestFullscreen();
+                        } else if (docElm.mozRequestFullScreen) {
+                            docElm.mozRequestFullScreen();
+                        } else if (docElm.webkitRequestFullScreen) {
+                            docElm.webkitRequestFullScreen();
+                        } else if (docElm.msRequestFullscreen) {
+                            docElm.msRequestFullscreen();
+                        }
+                    $("*").css("cursor","none");
+                    } else {
+                        if (document.exitFullscreen) {
+                            document.exitFullscreen();
+                        } else if (document.webkitExitFullscreen) {
+                            document.webkitExitFullscreen();
+                        } else if (document.mozCancelFullScreen) {
+                            document.mozCancelFullScreen();
+                        } else if (document.msExitFullscreen) {
+                            document.msExitFullscreen();
+                        }
+                    $("*").css("cursor","auto");
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>
